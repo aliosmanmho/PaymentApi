@@ -56,8 +56,9 @@ namespace Payment.Bussinies.Repositories
             }
             catch (Exception ex)
             {
+                _logger.Log(LogLevel.Warning, nameof(GetByBinNoAsycn), ex);
                 serviceResponse.Succeeded = false;
-                serviceResponse.Errors.Append(ex.ToString());
+                serviceResponse.Errors.Add(ex.ToString());
             }
            
             return serviceResponse;
@@ -96,7 +97,7 @@ namespace Payment.Bussinies.Repositories
             {
                 _logger.Log(LogLevel.Warning, nameof(PayAsycn), ex);
                 serviceResponse.Succeeded = false;
-                serviceResponse.Errors.Append(ex.ToString());
+                serviceResponse.Errors.Add(ex.ToString());
             }
             return serviceResponse;
         }

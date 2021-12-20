@@ -16,13 +16,13 @@ namespace Payment.Bussinies
         {
             Succeeded = true;
             Message = string.Empty;
-            Errors = null;
+            Errors = new List<string>();
         }
         public ServiceResponse(T data)
         {
             Succeeded = true;
             Message = string.Empty;
-            Errors = null;
+            Errors = new List<string>();
             Data = data;
         }
         /// <summary>
@@ -36,7 +36,7 @@ namespace Payment.Bussinies
         /// <summary>
         /// Errors
         /// </summary>
-        public string[] Errors { get; set; }
+        public List<string> Errors { get; set; }
         /// <summary>
         /// Detail Message
         /// </summary>
