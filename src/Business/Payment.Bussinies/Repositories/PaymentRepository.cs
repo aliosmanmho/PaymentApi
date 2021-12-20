@@ -29,7 +29,7 @@ namespace Payment.Bussinies.Repositories
             ServiceResponse<BinNumberResponse> serviceResponse = new ServiceResponse<BinNumberResponse>();
             try
             {
-                _logger.Log(LogLevel.Information, "GetBinNo Start", binNummberRequest);
+                _logger?.Log(LogLevel.Information, $"{nameof(GetByBinNoAsycn)} Start", binNummberRequest);
                 if (BinNumberCacher.Instance.GetCount() <= 0)
                 {
                     var binMubers = await _paymentBinNumberRepository.GetAllAsync();
@@ -51,14 +51,14 @@ namespace Payment.Bussinies.Repositories
                     CartType = binNumber.CartType,
                     Organization = binNumber.Organization
                 };
-                _logger.Log(LogLevel.Information, "GetBinNo End", resp);
+                _logger?.Log(LogLevel.Information, $"{nameof(GetByBinNoAsycn)} End", resp);
                 serviceResponse.Data = resp;
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Warning, nameof(GetByBinNoAsycn), ex);
+                _logger?.Log(LogLevel.Warning, nameof(GetByBinNoAsycn), ex);
                 serviceResponse.Succeeded = false;
-                serviceResponse.Errors.Add(ex.ToString());
+                serviceResponse.Errors.Add(ex.Message);
             }
            
             return serviceResponse;
@@ -69,7 +69,7 @@ namespace Payment.Bussinies.Repositories
             ServiceResponse<PaymentPayResponse> serviceResponse = new ServiceResponse<PaymentPayResponse>();
             try
             {
-                _logger.Log(LogLevel.Information, "PayAsycn Start", paymentPayRequest);
+                _logger?.Log(LogLevel.Information, $"{nameof(PayAsycn)} Start", paymentPayRequest);
                 PaymentActivity paymentActivity = new PaymentActivity()
                 {
                     Amount = paymentPayRequest.Amount,
@@ -90,14 +90,14 @@ namespace Payment.Bussinies.Repositories
                 }
                 await _paymentAvtivityRepository.AddAsync(paymentActivity);
                 var resp = new PaymentPayResponse() { Amount = payResponse.Amount };
-                _logger.Log(LogLevel.Information, "PayAsycn End", resp);
+                _logger?.Log(LogLevel.Information, $"{nameof(PayAsycn)} End", resp);
                 serviceResponse.Data = resp;
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Warning, nameof(PayAsycn), ex);
+                _logger?.Log(LogLevel.Warning, nameof(PayAsycn), ex);
                 serviceResponse.Succeeded = false;
-                serviceResponse.Errors.Add(ex.ToString());
+                serviceResponse.Errors.Add(ex.Message);
             }
             return serviceResponse;
         }

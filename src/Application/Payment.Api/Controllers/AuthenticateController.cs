@@ -35,7 +35,7 @@ namespace Payment.Api.Controllers
         [HttpPost(Name ="GetToken")]
         public string GetToken(string userName,string password)
         {
-            _logger.Log(LogLevel.Information, "start",_logger.GetType());
+            _logger?.Log(LogLevel.Information, $"{nameof(GetToken)} Start",_logger.GetType());
             //TODO:User Service Yazılacak
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTSettings:Key"]));
@@ -46,7 +46,7 @@ namespace Payment.Api.Controllers
               null,
               expires: DateTime.Now.AddMinutes(120),
               signingCredentials: credentials);
-            _logger.Log(LogLevel.Information, "end", _logger.GetType());
+            _logger?.Log(LogLevel.Information, $"{nameof(GetToken)} End", _logger.GetType());
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
