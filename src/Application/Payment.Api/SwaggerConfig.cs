@@ -21,8 +21,8 @@ namespace Payment.Api
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Clean Architecture Application",
-                    Description = "Clean Architecture Application Web API",
+                    Title = "Payment Project Application",
+                    Description = "Payment Project Application Web API",
                 });
                 s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
