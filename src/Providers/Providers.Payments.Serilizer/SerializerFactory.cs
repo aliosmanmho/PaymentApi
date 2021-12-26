@@ -1,26 +1,28 @@
-﻿using Providers.Payments.Serilizer.Json;
-using Providers.Payments.Serilizer.MessagePack;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Providers.Payments.Serilizer
+﻿namespace Providers.Payments.Serilizer
 {
     public class SerializerFactory
     {
-        public static ISerilizer GetSerilizer(SerializerEnum val)
+        public static SerializerFactory Instance { get; private set; } = new SerializerFactory();
+     
+        private Dictionary<SerializerEnum, ISerilizer> _serilizers = new Dictionary<SerializerEnum, ISerilizer>();
+        private SerializerFactory()
         {
-            switch (val)
+            foreach (SerializerEnum serilize in Enum.GetValues(typeof(SerializerEnum)))
             {
-                case SerializerEnum.JsonSerilize:
-                    return new JsonSerilizer();
-                case SerializerEnum.MesagePack:
-                    return new MesagePackageSerilizer();
-                default:
-                    throw new NotImplementedException(nameof(val));
+                Type? t = Type.GetType($"Providers.Payments.Serilizer.{Enum.GetName(typeof(SerializerEnum), serilize)}Serilizer");
+                if (t != null)
+                {
+                    var factory = Activator.CreateInstance(t);
+                    if (factory != null)
+                        _serilizers.Add(serilize, (ISerilizer)factory);
+                }
             }
+        }
+        public ISerilizer GetSerilizer(SerializerEnum serializer)
+        {
+            if (!_serilizers.TryGetValue(serializer, out var value))
+                throw new NotImplementedException($"Not İmplement Payment Provider : {Enum.GetName(typeof(SerializerEnum), serializer)}");
+            return value;
         }
     }
 }

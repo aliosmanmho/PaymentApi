@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Providers.Payments.Serilizer.Json
+namespace Providers.Payments.Serilizer
 {
     public class JsonSerilizer : ISerilizer
     {

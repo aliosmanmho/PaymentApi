@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Payment.Providers.BankProviders.ZiraatBank
+namespace Payment.Providers.BankProviders
 {
     public class ZiraatBankPaymentProvider : BasePaymentProvider, IPaymentProvider
     {

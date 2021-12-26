@@ -44,7 +44,7 @@ namespace Payment.Providers.Cache.Memory
 
         public void Add(string key, T value)
         {
-            var result = SerializerFactory.GetSerilizer(_serializerEnum).Serilize<T>(value);
+            var result = SerializerFactory.Instance.GetSerilizer(_serializerEnum).Serilize<T>(value);
             lock (base._lock)
             {
                 _cacheDictionary[key] = result;
@@ -53,7 +53,7 @@ namespace Payment.Providers.Cache.Memory
 
         public async Task AddAsync(string key, T value)
         {
-            var result = await SerializerFactory.GetSerilizer(_serializerEnum).SerilizeAsync<T>(value);
+            var result = await SerializerFactory.Instance.GetSerilizer(_serializerEnum).SerilizeAsync<T>(value);
 
             lock (base._lock)
             {
@@ -73,7 +73,7 @@ namespace Payment.Providers.Cache.Memory
                     _cacheDictionary[key] = value;
                 }
             }
-            return SerializerFactory.GetSerilizer(_serializerEnum).DeSerilize<T>(value);
+            return SerializerFactory.Instance.GetSerilizer(_serializerEnum).DeSerilize<T>(value);
         }
 
         public async Task<T> GetOrAddAsync(string key, Func<T> factory)
@@ -88,7 +88,7 @@ namespace Payment.Providers.Cache.Memory
                     _cacheDictionary[key] = value;
                 }
             }
-            return await SerializerFactory.GetSerilizer(_serializerEnum).DeSerilizeAsycn<T>(value);
+            return await SerializerFactory.Instance.GetSerilizer(_serializerEnum).DeSerilizeAsycn<T>(value);
         }
 
         public T? GetOrNull(string key)
@@ -102,7 +102,7 @@ namespace Payment.Providers.Cache.Memory
                     return default(T);
                 }
             }
-            return SerializerFactory.GetSerilizer(_serializerEnum).DeSerilize<T>(value);
+            return SerializerFactory.Instance.GetSerilizer(_serializerEnum).DeSerilize<T>(value);
         }
         public async Task<T?> GetOrNullAsync(string key)
         {
@@ -115,7 +115,7 @@ namespace Payment.Providers.Cache.Memory
                     return default(T);
                 }
             }
-            return await SerializerFactory.GetSerilizer(_serializerEnum).DeSerilizeAsycn<T>(value);
+            return await SerializerFactory.Instance.GetSerilizer(_serializerEnum).DeSerilizeAsycn<T>(value);
         }
 
         public void Clear()

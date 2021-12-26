@@ -2,7 +2,7 @@
 using MessagePack.Resolvers;
 using System.Text;
 
-namespace Providers.Payments.Serilizer.MessagePack
+namespace Providers.Payments.Serilizer
 {
     public class MesagePackageSerilizer : ISerilizer
     {

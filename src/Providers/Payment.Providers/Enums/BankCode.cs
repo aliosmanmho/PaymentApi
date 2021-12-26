@@ -8,11 +8,11 @@ namespace Payment.Providers.Enums
 {
     public enum BankCode
     {
-        TZiraatBank = 10,
-        THalkBank = 12,
-        TVakifBank = 15,
-        TEkonomiBank = 32,
-        Akbank = 46,
+        ZiraatBank = 10,
+        HalkBank = 12,
+        VakifBank = 15,
+        EkonomiBank = 32,
+        AkBank = 46,
         SekerBank = 59,
         TGarantiBank = 62,
         TIsBank = 64,

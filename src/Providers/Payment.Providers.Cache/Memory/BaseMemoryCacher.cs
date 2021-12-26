@@ -16,13 +16,13 @@ namespace Payment.Providers.Cache.Memory
         {
             _cacheDictionary = new Dictionary<string, object>();
 
-            _serializerEnum = SerializerEnum.JsonSerilize;
+            _serializerEnum = SerializerEnum.Json;
         }
         protected BaseMemoryCacher(SerializerEnum serializerEnum)
         {
             _cacheDictionary = new Dictionary<string, object>();
             if (serializerEnum == default(SerializerEnum))
-                _serializerEnum = SerializerEnum.JsonSerilize;
+                _serializerEnum = SerializerEnum.Json;
             else
                 _serializerEnum = serializerEnum;
         }

@@ -2,11 +2,10 @@
 
 namespace Providers.Payments.Serilizer
 {
-    [DefaultValue(SerializerEnum.None)]
+    [DefaultValue(SerializerEnum.Json)]
     public enum SerializerEnum
     {
-        None,
-        JsonSerilize,
-        MesagePack,
+        Json,
+        MesagePackage,
     }
 }

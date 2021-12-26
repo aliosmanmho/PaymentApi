@@ -82,7 +82,7 @@ namespace Payment.Bussinies.Repositories
                 var binNumber = await GetByBinNoAsycn(new BinNummberRequest() { BinNummber = paymentPayRequest.CardNo.GetBimNumber() });
                 if (!binNumber.Succeeded)
                     throw new Exception("Get Bin Number Don't Succeeded");
-                IPaymentProvider paymentProvider = PaymentProviderFact.GetPaymentBankProvider(binNumber.Data.BankCode.ToEnum<BankCode>());
+                IPaymentProvider paymentProvider = PaymentProviderFact.Instance.GetPaymentBankProvider(binNumber.Data.BankCode.ToEnum<BankCode>());
                 var payResponse = await paymentProvider.PayAsync(new Providers.Model.Requests.PaymentPayProviderRequest() { Amount = paymentPayRequest.Amount });
                 if (payResponse == null)
                 {
