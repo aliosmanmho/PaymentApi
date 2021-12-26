@@ -10,6 +10,8 @@ using Payment.Core.Enums;
 using Payment.Core.Extension;
 using Payment.Core.Repositories;
 using Payment.Providers;
+using Payment.Providers.Cache.Memory;
+using Payment.Providers.Cache.Models;
 using Payment.Providers.Enums;
 
 namespace Payment.Bussinies.Repositories
@@ -30,16 +32,16 @@ namespace Payment.Bussinies.Repositories
             try
             {
                 _logger?.Log(LogLevel.Information, $"{nameof(GetByBinNoAsycn)} Start", binNummberRequest);
-                if (BinNumberCacher.Instance.GetCount() <= 0)
+                if (BinNumberCacher<BinNumberCacherModel>.Get().GetCount() <= 0)
                 {
                     var binMubers = await _paymentBinNumberRepository.GetAllAsync();
-                    binMubers.All(x =>
+                    var taskList = binMubers.Select(x =>
                     {
-                        BinNumberCacher.Instance.Add(x.BinCode.ToString(), x);
-                        return true;
+                        return BinNumberCacher<BinNumberCacherModel>.Get().AddAsync(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(x));
                     });
+                    await Task.WhenAll(taskList);
                 }
-                var binNumber = BinNumberCacher.Instance.GetOrNull(binNummberRequest.BinNummber.ToString()).TryCast<BinNumber>();
+                var binNumber = BinNumberCacher<BinNumberCacherModel>.Get().GetOrNull(binNummberRequest.BinNummber.ToString());
 
                 if (binNumber == null)
                     throw new Exception($"Not Found Bin Number! Number:{binNummberRequest.BinNummber}");

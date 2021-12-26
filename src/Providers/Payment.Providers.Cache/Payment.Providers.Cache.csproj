@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Redis\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Business\Payment.Bussinies.StaticData\Payment.Bussinies.StaticData.csproj" />
+    <ProjectReference Include="..\..\Core\Payment.Core\Payment.Core.csproj" />
+    <ProjectReference Include="..\Providers.Payments.Serilizer\Providers.Payments.Serilizer.csproj" />
+  </ItemGroup>
+
+</Project>

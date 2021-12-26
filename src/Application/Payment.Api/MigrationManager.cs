@@ -3,6 +3,9 @@ using Payment.Bussinies.StaticData;
 using Payment.Bussinies.StaticData.FileRead;
 using Payment.Core.Entities;
 using Payment.Data.Context;
+using Payment.Providers.Cache;
+using Payment.Providers.Cache.Memory;
+using Payment.Providers.Cache.Models;
 
 namespace Payment.Api
 {
@@ -27,9 +30,9 @@ namespace Payment.Api
                         appContext.Database.Migrate();
                         if (!appContext.BinNumbers.Any())
                         {
-                             var readData = FileReadParser.ReadBinNumbers(Templates);
+                            var readData = FileReadParser.ReadBinNumbers(Templates);
 
-                            if(readData != null && readData.IsCompleted)
+                            if (readData != null && readData.IsCompleted)
                             {
                                 List<BinNumber> binNumbers = new List<BinNumber>();
                                 readData.Result.All(x =>
@@ -46,23 +49,24 @@ namespace Payment.Api
                                         Organization = x.Organization,
                                     };
                                     binNumbers.Add(data);
-                                    BinNumberCacher.Instance.Add(data.BinCode.ToString(), data);
+                                    BinNumberCacher<BinNumberCacherModel>.Get().Add(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(data));
                                     return true;
-                                    
+
                                 });
                                 appContext.BinNumbers.AddRange(binNumbers);
                                 appContext.SaveChanges();
 
-                                
+
                             }
                         }
                         else
                         {
-                            var data = appContext.BinNumbers.ToList();
-                            data.All(x => {
-                                BinNumberCacher.Instance.Add(x.BinCode.ToString(), x);
-                                return true;
+                            var binNumbers = appContext.BinNumbers.ToList();
+                            var taskList = binNumbers.Select(x =>
+                            {
+                                return BinNumberCacher<BinNumberCacherModel>.Get().AddAsync(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(x));
                             });
+                            Task.WhenAll(taskList);
                         }
                     }
                     catch (Exception ex)

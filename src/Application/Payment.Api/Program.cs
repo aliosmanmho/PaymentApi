@@ -7,7 +7,10 @@ using Payment.Core.Repositories;
 using Payment.Core.Repositories.Base;
 using Payment.Data.Context;
 using Payment.Data.Repositories;
-
+using Payment.Providers.Cache;
+using Payment.Providers.Cache.Memory;
+using Payment.Providers.Cache.Models;
+using Providers.Payments.Serilizer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +33,9 @@ builder.Services.AddScoped<IPaymentAvtivityRepository, PaymentActivityRepository
 builder.Services.AddScoped<IPaymentBinNumberRepository, PaymentBinNumberRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
+///Initilize From Config
+var serilizer = builder.Configuration["Serilizer"];
+CacherConfiguration.Initilize(serilizer);
 
 var app = builder.Build();
 app.UseSwaggerSetup();

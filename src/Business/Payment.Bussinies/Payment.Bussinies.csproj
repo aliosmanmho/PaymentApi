@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Payment.Core\Payment.Core.csproj" />
+    <ProjectReference Include="..\..\Providers\Payment.Providers.Cache\Payment.Providers.Cache.csproj" />
     <ProjectReference Include="..\..\Providers\Payment.Providers\Payment.Providers.csproj" />
     <ProjectReference Include="..\Payment.Bussinies.StaticData\Payment.Bussinies.StaticData.csproj" />
   </ItemGroup>
