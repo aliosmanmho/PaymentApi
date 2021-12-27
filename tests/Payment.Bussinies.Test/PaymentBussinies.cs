@@ -9,7 +9,7 @@ using Payment.Core.Entities;
 using Payment.Bussinies.StaticData;
 using System.IO;
 using Payment.Providers.Cache.Memory;
-using Providers.Payments.Serilizer;
+using Payment.Providers.Serilizer;
 using Payment.Providers.Cache.Models;
 
 namespace Payment.Bussinies.Test

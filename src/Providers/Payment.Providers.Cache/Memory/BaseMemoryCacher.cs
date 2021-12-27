@@ -1,4 +1,4 @@
-﻿using Providers.Payments.Serilizer;
+﻿using Payment.Providers.Serilizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

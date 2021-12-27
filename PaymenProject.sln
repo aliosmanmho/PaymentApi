@@ -29,9 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Providers.Cache", "src\Providers\Payment.Providers.Cache\Payment.Providers.Cache.csproj", "{22B55502-00A4-4681-84B5-8A0A02AC7B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Providers.Payments.Serilizer", "src\Providers\Providers.Payments.Serilizer\Providers.Payments.Serilizer.csproj", "{34792BC9-DD79-4405-A07D-B944B34D23D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Providers.Cache.Test", "tests\Payment.Providers.Cache.Test\Payment.Providers.Cache.Test.csproj", "{766DB809-5C8F-4CBF-B9CB-355C7E06CF22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Providers.Cache.Test", "tests\Payment.Providers.Cache.Test\Payment.Providers.Cache.Test.csproj", "{766DB809-5C8F-4CBF-B9CB-355C7E06CF22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Providers.Serilizer", "src\Providers\Payment.Providers.Serilizer\Payment.Providers.Serilizer.csproj", "{3A5E04BF-2D83-4182-89D4-AA5227A9730F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,14 +71,14 @@ Global
 		{22B55502-00A4-4681-84B5-8A0A02AC7B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22B55502-00A4-4681-84B5-8A0A02AC7B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22B55502-00A4-4681-84B5-8A0A02AC7B3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34792BC9-DD79-4405-A07D-B944B34D23D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34792BC9-DD79-4405-A07D-B944B34D23D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34792BC9-DD79-4405-A07D-B944B34D23D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34792BC9-DD79-4405-A07D-B944B34D23D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{766DB809-5C8F-4CBF-B9CB-355C7E06CF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{766DB809-5C8F-4CBF-B9CB-355C7E06CF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{766DB809-5C8F-4CBF-B9CB-355C7E06CF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{766DB809-5C8F-4CBF-B9CB-355C7E06CF22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A5E04BF-2D83-4182-89D4-AA5227A9730F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A5E04BF-2D83-4182-89D4-AA5227A9730F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A5E04BF-2D83-4182-89D4-AA5227A9730F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A5E04BF-2D83-4182-89D4-AA5227A9730F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,8 +92,8 @@ Global
 		{CC5CB822-720B-4D95-AB87-D9963C06E3E2} = {FE9D57E9-757E-412E-AA94-23081683C656}
 		{C38F4532-D25B-42DC-ABBA-239A506EA71C} = {AFADB133-4C96-4899-A2B9-F597F3998D4F}
 		{22B55502-00A4-4681-84B5-8A0A02AC7B3F} = {FE9D57E9-757E-412E-AA94-23081683C656}
-		{34792BC9-DD79-4405-A07D-B944B34D23D2} = {FE9D57E9-757E-412E-AA94-23081683C656}
 		{766DB809-5C8F-4CBF-B9CB-355C7E06CF22} = {AFADB133-4C96-4899-A2B9-F597F3998D4F}
+		{3A5E04BF-2D83-4182-89D4-AA5227A9730F} = {FE9D57E9-757E-412E-AA94-23081683C656}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE285ED4-82B8-4AED-A1A4-374319F14904}

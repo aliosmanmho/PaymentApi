@@ -1,7 +1,7 @@
 using Payment.Core.Entities;
 using Payment.Providers.Cache.Memory;
 using Payment.Providers.Cache.Models;
-using Providers.Payments.Serilizer;
+using Payment.Providers.Serilizer;
 using System.Threading;
 using Xunit;
 

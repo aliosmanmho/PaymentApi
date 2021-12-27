@@ -10,7 +10,7 @@ using Payment.Data.Repositories;
 using Payment.Providers.Cache;
 using Payment.Providers.Cache.Memory;
 using Payment.Providers.Cache.Models;
-using Providers.Payments.Serilizer;
+using Payment.Providers.Serilizer;
 
 var builder = WebApplication.CreateBuilder(args);
 
