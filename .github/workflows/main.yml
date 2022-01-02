@@ -31,6 +31,7 @@ jobs:
         PostgreSql.ConnectionString: ${{ secrets.ConnectionString }}
         PostgreSql.DbPassword: ${{ secrets.DbPassword }}
         JWTSettings.Key: ${{ secrets.JWTSettingsKey }}
+        Redis.RedisConnectionString: ${{ secrets.RedisConnectionString }}
 
     # Build Docker image
     - name: Docker build
