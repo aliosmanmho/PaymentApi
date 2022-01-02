@@ -29,7 +29,7 @@ namespace Payment.Providers.Cache.Remote
         /// </summary>
         /// <param name="serializerEnum"></param>
         /// <returns></returns>
-        public static BinNumberRemoteCacher<T> Initilize(MemorySerializer serializerEnum, bool initiliaForce = false, string config = "")
+        public static BinNumberRemoteCacher<T> Initilize(MemorySerializer serializerEnum, bool initiliaForce = false, RedisConfig config = null)
         {
             lock (_lockInstance)
             {

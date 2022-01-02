@@ -15,15 +15,14 @@ namespace Payment.Providers.Cache.Remote.Redis
         private IDatabase _database;
         private string configurationStrign;
         private int _currentDatabaseId = 1;
-        private Uri redisUri;
-        public RedisServer(string config)
+        private RedisConfig _config;
+        public RedisServer(RedisConfig config)
         {
-            if (string.IsNullOrEmpty(config))
+            if (default(RedisConfig) == config)
                 throw new Exception("Redis Config Not Initilize!");
-            configurationStrign = config;
-            redisUri = new Uri(configurationStrign);
-            var userInfo = redisUri.UserInfo.Split(':');
-            var redisConnString = $"{redisUri.Host}:{redisUri.Port},allowAdmin=true,password={userInfo[1]}";
+            _config = config;
+
+            var redisConnString = $"{_config.Host}:{_config.Port},allowAdmin=true,password={_config.Password}";
 
             _connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnString);
             _database = _connectionMultiplexer.GetDatabase(_currentDatabaseId);
@@ -42,7 +41,7 @@ namespace Payment.Providers.Cache.Remote.Redis
 
         public void Clear()
         {
-            _connectionMultiplexer.GetServer(redisUri.Host,redisUri.Port).FlushDatabase(_currentDatabaseId);
+            _connectionMultiplexer.GetServer(_config.Host,int.Parse(_config.Port)).FlushDatabase(_currentDatabaseId);
         }
 
         public string Get(string key)
@@ -61,7 +60,7 @@ namespace Payment.Providers.Cache.Remote.Redis
 
         public int Count()
         {
-            return _connectionMultiplexer.GetServer(redisUri.Host, redisUri.Port).Keys().Count();
+            return _connectionMultiplexer.GetServer(_config.Host, int.Parse(_config.Port)).Keys().Count();
         }
     }
 }

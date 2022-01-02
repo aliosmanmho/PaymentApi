@@ -16,7 +16,7 @@ namespace Payment.Providers.Cache.Remote
         protected MemorySerializer _serializerEnum { get; private set; }
         protected RemoteCacher()
         {
-            _cache = new RedisServer("");
+            _cache = new RedisServer(null);
 
             _serializerEnum = MemorySerializer.Json;
         }

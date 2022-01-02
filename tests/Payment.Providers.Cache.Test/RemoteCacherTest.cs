@@ -25,7 +25,10 @@ namespace Payment.Providers.Cache.Test
                 var binNumber = new BinNumber() { BankCode = 10, BankName = "Abc", BinCode = 123454 };
             
 
-                BinNumberRemoteCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true);
+                BinNumberRemoteCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true, new RedisConfig()
+                {
+                    //AppSettingForDevInitilize
+                });
                 BinNumberRemoteCacher<BinNumberCacherModel>.Get().Clear();
                 await BinNumberRemoteCacher<BinNumberCacherModel>.Get().AddAsync(binNumber.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(binNumber));
                 var data = await BinNumberRemoteCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
