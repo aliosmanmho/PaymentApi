@@ -23,7 +23,7 @@ namespace Payment.Providers.Cache.Remote.Redis
             _config = config;
 
             var redisConnString = $"{_config.Host}:{_config.Port},allowAdmin=true,password={_config.Password}";
-
+            Console.WriteLine(redisConnString);
             _connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnString);
             _database = _connectionMultiplexer.GetDatabase(_currentDatabaseId);
         }
