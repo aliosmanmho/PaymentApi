@@ -1,6 +1,7 @@
 using Payment.Core.Entities;
 using Payment.Providers.Cache.Memory;
 using Payment.Providers.Cache.Models;
+using Payment.Providers.Cache.Remote;
 using Payment.Providers.Serilizer;
 using System.Threading;
 using Xunit;
@@ -19,12 +20,13 @@ namespace Payment.Providers.Cache.Test
             try
             {
                 var binNumber = new BinNumber() { BankCode = 10, BankName = "Abc", BinCode = 123454 };
-                BinNumberCacher<BinNumberCacherModel>.Initilize(SerializerEnum.Json, true);
+                BinNumberCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true);
                 BinNumberCacher<BinNumberCacherModel>.Get().Clear();
                 await BinNumberCacher<BinNumberCacherModel>.Get().AddAsync(binNumber.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(binNumber));
                 var data = await BinNumberCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
                 Assert.NotNull(data);
                 Assert.Equal(binNumber.BinCode, data?.BinCode);
+
             }
             finally
             {
@@ -39,7 +41,7 @@ namespace Payment.Providers.Cache.Test
             try
             {
                 var binNumber = new BinNumber() { BankCode = 10, BankName = "Abc", BinCode = 123454 };
-                BinNumberCacher<BinNumberCacherModel>.Initilize(SerializerEnum.MesagePackage, true);
+                BinNumberCacher<BinNumberCacherModel>.Initilize(MemorySerializer.MesagePackage, true);
                 BinNumberCacher<BinNumberCacherModel>.Get().Clear();
                 await BinNumberCacher<BinNumberCacherModel>.Get().AddAsync(binNumber.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(binNumber));
                 var binNumberCache = await BinNumberCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
@@ -58,7 +60,7 @@ namespace Payment.Providers.Cache.Test
             try
             {
                 var country = new CountryCacherModel() { Code = "09", Name = "Turkey" };
-                CountryCacher<CountryCacherModel>.Initilize(SerializerEnum.Json, true);
+                CountryCacher<CountryCacherModel>.Initilize(MemorySerializer.Json, true);
                 CountryCacher<CountryCacherModel>.Get().Clear();
                 await CountryCacher<CountryCacherModel>.Get().AddAsync(country.Code, country);
                 var countryCacher = await CountryCacher<CountryCacherModel>.Get().GetOrNullAsync(country.Code);
@@ -77,7 +79,7 @@ namespace Payment.Providers.Cache.Test
             try
             {
                 var country = new CountryCacherModel() { Code = "09", Name = "Turkey" };
-                CountryCacher<CountryCacherModel>.Initilize(SerializerEnum.MesagePackage, true);
+                CountryCacher<CountryCacherModel>.Initilize(MemorySerializer.MesagePackage, true);
                 CountryCacher<CountryCacherModel>.Get().Clear();
                 await CountryCacher<CountryCacherModel>.Get().AddAsync(country.Code, country);
                 var countryCacher = await CountryCacher<CountryCacherModel>.Get().GetOrNullAsync(country.Code);

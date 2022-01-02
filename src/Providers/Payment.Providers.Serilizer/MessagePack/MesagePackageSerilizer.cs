@@ -1,5 +1,6 @@
 ﻿using MessagePack;
 using MessagePack.Resolvers;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Payment.Providers.Serilizer
@@ -8,40 +9,42 @@ namespace Payment.Providers.Serilizer
     {
         //TODO:Configuration Read
         private readonly MessagePackSerializerOptions messagePackSerializerOptions = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        public T DeSerilize<T>(object value) 
+        public TValue DeSerilize<TValue, TResult>(TResult value)
         {
-            if (value == null || value.ToString() == string.Empty)
+            if (value.Equals(default(TValue)))
                 throw new ArgumentNullException($"{nameof(DeSerilizeAsycn)} : value");
-
-            return MessagePackSerializer.Deserialize<T>((byte[])value, messagePackSerializerOptions);
+          
+            return MessagePackSerializer.Deserialize<TValue>(value as byte[], messagePackSerializerOptions);
         }
 
-        public async Task<T> DeSerilizeAsycn<T>(object value)
+        public async Task<TValue> DeSerilizeAsycn<TValue, TResult>(TResult value)
         {
-            if (value == null || value.ToString() == string.Empty)
+            if (value.Equals(default(TValue)))
                 throw new ArgumentNullException($"{nameof(DeSerilizeAsycn)} : value");
 
-            using (var stream = new MemoryStream((byte[])value))
-                return await MessagePackSerializer.DeserializeAsync<T>(stream, messagePackSerializerOptions);
+            using (var stream = new MemoryStream(value as byte[]))
+                return await MessagePackSerializer.DeserializeAsync<TValue>(stream, messagePackSerializerOptions);
         }
 
-        public object Serilize<T>(T value) where T : class
+        public TResult Serilize<TValue, TResult>(TValue value)
         {
-            if (value == default(T))
+            if (value.Equals(default(TValue)))
                 throw new ArgumentNullException($"{nameof(SerilizeAsync)} : value");
 
-            return MessagePackSerializer.Serialize<T>(value, messagePackSerializerOptions);
+            var data = MessagePackSerializer.Serialize<TValue>(value, messagePackSerializerOptions);
+            return Unsafe.As<byte[], TResult>(ref data);
         }
 
-        public async Task<object> SerilizeAsync<T>(T value) where T : class
+        public async Task<TResult> SerilizeAsync<TValue, TResult>(TValue value)
         {
-            if (value == default(T))
+            if (value.Equals(default(TValue)))
                 throw new ArgumentNullException($"{nameof(SerilizeAsync)} : value");
 
             using (var byteStream = new MemoryStream())
             {
-                await MessagePackSerializer.SerializeAsync<T>(byteStream, value, messagePackSerializerOptions);
-                return byteStream.ToArray();
+                await MessagePackSerializer.SerializeAsync<TValue>(byteStream, value, messagePackSerializerOptions);
+                var data = byteStream.ToArray();
+                return Unsafe.As<byte[], TResult>(source: ref data);
             }
         }
     }

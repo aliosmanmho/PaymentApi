@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -9,54 +10,54 @@ namespace Payment.Providers.Serilizer
 {
     public class JsonSerilizer : ISerilizer
     {
-        public T DeSerilize<T>(object value)
+        public TValue DeSerilize<TValue, TResult>(TResult value)
         {
-            if (value == null || value.ToString() == string.Empty)
+            if (value.Equals(default(TResult)))
                 throw new ArgumentNullException($"{nameof(DeSerilizeAsycn)} : value");
 
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes((string)value)))
-                return JsonSerializer.Deserialize<T>(stream);
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(value as string)))
+                return JsonSerializer.Deserialize<TValue>(stream);
         }
 
-        public async Task<T> DeSerilizeAsycn<T>(object value)
+        public async Task<TValue> DeSerilizeAsycn<TValue, TResult>(TResult value)
         {
-            if(value == null || value.ToString() == string.Empty)
+            if(value.Equals(default(TResult)))
                 throw new ArgumentNullException($"{nameof(DeSerilizeAsycn)} : value");
 
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes((string)value)))
-                return await JsonSerializer.DeserializeAsync<T>(stream);
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(value as string)))
+                return await JsonSerializer.DeserializeAsync<TValue>(stream);
         }
 
-        public object Serilize<T>(T value) where T : class
+        public TResult Serilize<TValue, TResult>(TValue value)
         {
-            if (value == default(T))
+            if (value.Equals(default(TValue)))
                 throw new ArgumentNullException($"{nameof(SerilizeAsync)} : value");
 
             string json = string.Empty;
             using (var stream = new MemoryStream())
             {
-                JsonSerializer.Serialize<T>(stream, value);
+                JsonSerializer.Serialize<TValue>(stream, value);
                 stream.Position = 0;
                 using var reader = new StreamReader(stream);
                 json =  reader.ReadToEnd();
             }
-            return json;
+            return Unsafe.As<string, TResult>(ref json);
         }
 
-        public async Task<object> SerilizeAsync<T>(T value) where T : class
+        public async Task<TResult> SerilizeAsync<TValue, TResult>(TValue value)
         {
-            if(value == default(T))
+             if (value.Equals(default(TValue)))
                 throw new ArgumentNullException($"{nameof(SerilizeAsync)} : value");
 
             string json = string.Empty;
             using (var stream = new MemoryStream())
             {
-                await JsonSerializer.SerializeAsync<T>(stream, value);
+                await JsonSerializer.SerializeAsync<TValue>(stream, value);
                 stream.Position = 0;
                 using var reader = new StreamReader(stream);
                 json = await reader.ReadToEndAsync();
             }
-            return json;
+            return Unsafe.As<string, TResult>(ref json);
         }
     }
 }

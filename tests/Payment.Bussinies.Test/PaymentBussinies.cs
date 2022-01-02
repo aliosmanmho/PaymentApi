@@ -20,7 +20,7 @@ namespace Payment.Bussinies.Test
         public static readonly string Templates = Path.Combine(App, "Files");
         public PaymentBussinies()
         {
-            BinNumberCacher<BinNumberCacherModel>.Initilize(SerializerEnum.Json, true);
+            BinNumberCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true);
         }
         [Fact]
         public async void GetBinNoTest()

@@ -11,18 +11,18 @@ namespace Payment.Providers.Cache.Memory
     {
         protected readonly IDictionary<string, object> _cacheDictionary;
         protected readonly object _lock = new object();
-        protected SerializerEnum _serializerEnum { get; private set; }
+        protected MemorySerializer _serializerEnum { get; private set; }
         protected BaseMemoryCacher()
         {
             _cacheDictionary = new Dictionary<string, object>();
 
-            _serializerEnum = SerializerEnum.Json;
+            _serializerEnum = MemorySerializer.Json;
         }
-        protected BaseMemoryCacher(SerializerEnum serializerEnum)
+        protected BaseMemoryCacher(MemorySerializer serializerEnum)
         {
             _cacheDictionary = new Dictionary<string, object>();
-            if (serializerEnum == default(SerializerEnum))
-                _serializerEnum = SerializerEnum.Json;
+            if (serializerEnum == default(MemorySerializer))
+                _serializerEnum = MemorySerializer.Json;
             else
                 _serializerEnum = serializerEnum;
         }

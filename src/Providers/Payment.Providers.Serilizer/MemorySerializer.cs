@@ -2,8 +2,8 @@
 
 namespace Payment.Providers.Serilizer
 {
-    [DefaultValue(SerializerEnum.Json)]
-    public enum SerializerEnum
+    [DefaultValue(MemorySerializer.Json)]
+    public enum MemorySerializer
     {
         Json,
         MesagePackage,

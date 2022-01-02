@@ -1,4 +1,5 @@
 ﻿using Payment.Providers.Cache.Models;
+using Payment.Providers.Cache.Remote.Redis;
 using Payment.Providers.Serilizer;
 using System;
 using System.Collections.Generic;
@@ -6,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Payment.Providers.Cache.Memory
+namespace Payment.Providers.Cache.Remote
 {
-    public class BinNumberCacher<T> : MemoryCacher<T> where T : BinNumberCacherModel
+    public class BinNumberRemoteCacher<T> : RemoteCacher<T> where T : BinNumberCacherModel
     {
         private static readonly object _lockInstance = new object();
-        private BinNumberCacher(MemorySerializer serializerEnum) : base(serializerEnum) { }
-        private BinNumberCacher() { }
-        private static BinNumberCacher<T>? Instance;
-        public static BinNumberCacher<T> Get()
+        private BinNumberRemoteCacher(MemorySerializer serializerEnum,IRemoteCacher cacher) : base(serializerEnum, cacher) { }
+        private BinNumberRemoteCacher() { }
+        private static BinNumberRemoteCacher<T>? Instance;
+        public static BinNumberRemoteCacher<T> Get()
         {
             lock (_lockInstance)
             {
@@ -28,18 +29,18 @@ namespace Payment.Providers.Cache.Memory
         /// </summary>
         /// <param name="serializerEnum"></param>
         /// <returns></returns>
-        public static BinNumberCacher<T> Initilize(MemorySerializer serializerEnum, bool initiliaForce = false)
+        public static BinNumberRemoteCacher<T> Initilize(MemorySerializer serializerEnum, bool initiliaForce = false)
         {
             lock (_lockInstance)
             {
                 if (Instance == null || initiliaForce)
                 {
-                    Instance = new BinNumberCacher<T>(serializerEnum);
+                    RedisServer server = new RedisServer();
+                    Instance = new BinNumberRemoteCacher<T>(serializerEnum, server);
                 }
                 return Instance;
             }
 
         }
-
     }
 }

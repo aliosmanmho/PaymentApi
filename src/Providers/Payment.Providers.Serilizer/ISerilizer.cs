@@ -8,9 +8,9 @@ namespace Payment.Providers.Serilizer
 {
     public interface ISerilizer
     {
-        public object Serilize<T>(T value) where T : class;
-        public Task<object> SerilizeAsync<T>(T value) where T : class ;
-        public T DeSerilize<T>(object value);
-        public Task<T> DeSerilizeAsycn<T>(object value);
+        public TResult Serilize<TValue,TResult>(TValue value);
+        public Task<TResult> SerilizeAsync<TValue, TResult>(TValue value);
+        public TValue DeSerilize<TValue, TResult>(TResult value);
+        public Task<TValue> DeSerilizeAsycn<TValue, TResult>(TResult value);
     }
 }
