@@ -35,7 +35,7 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 ///Initilize From Config
 var serilizer = builder.Configuration["Serilizer"];
-var redisConfig = builder.Configuration["Redis"];
+var redisConfig = builder.Configuration["Redis:RedisConnectionString"];
 CacherConfiguration.Initilize(serilizer, redisConfig);
 
 var app = builder.Build();
