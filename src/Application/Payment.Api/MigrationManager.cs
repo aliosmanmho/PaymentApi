@@ -6,6 +6,7 @@ using Payment.Data.Context;
 using Payment.Providers.Cache;
 using Payment.Providers.Cache.Memory;
 using Payment.Providers.Cache.Models;
+using Payment.Providers.Cache.Remote;
 
 namespace Payment.Api
 {
@@ -49,7 +50,7 @@ namespace Payment.Api
                                         Organization = x.Organization,
                                     };
                                     binNumbers.Add(data);
-                                    BinNumberCacher<BinNumberCacherModel>.Get().Add(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(data));
+                                    BinNumberRemoteCacher<BinNumberCacherModel>.Get().Add(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(data));
                                     return true;
 
                                 });
@@ -64,7 +65,7 @@ namespace Payment.Api
                             var binNumbers = appContext.BinNumbers.ToList();
                             var taskList = binNumbers.Select(x =>
                             {
-                                return BinNumberCacher<BinNumberCacherModel>.Get().AddAsync(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(x));
+                                return BinNumberRemoteCacher<BinNumberCacherModel>.Get().AddAsync(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(x));
                             });
                             Task.WhenAll(taskList);
                         }

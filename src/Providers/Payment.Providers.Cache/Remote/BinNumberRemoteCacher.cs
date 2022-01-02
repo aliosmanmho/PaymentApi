@@ -12,7 +12,7 @@ namespace Payment.Providers.Cache.Remote
     public class BinNumberRemoteCacher<T> : RemoteCacher<T> where T : BinNumberCacherModel
     {
         private static readonly object _lockInstance = new object();
-        private BinNumberRemoteCacher(MemorySerializer serializerEnum,IRemoteCacher cacher) : base(serializerEnum, cacher) { }
+        private BinNumberRemoteCacher(MemorySerializer serializerEnum, IRemoteCacher cacher) : base(serializerEnum, cacher) { }
         private BinNumberRemoteCacher() { }
         private static BinNumberRemoteCacher<T>? Instance;
         public static BinNumberRemoteCacher<T> Get()
@@ -29,13 +29,13 @@ namespace Payment.Providers.Cache.Remote
         /// </summary>
         /// <param name="serializerEnum"></param>
         /// <returns></returns>
-        public static BinNumberRemoteCacher<T> Initilize(MemorySerializer serializerEnum, bool initiliaForce = false)
+        public static BinNumberRemoteCacher<T> Initilize(MemorySerializer serializerEnum, bool initiliaForce = false, string config = "")
         {
             lock (_lockInstance)
             {
                 if (Instance == null || initiliaForce)
                 {
-                    RedisServer server = new RedisServer();
+                    RedisServer server = new RedisServer(config);
                     Instance = new BinNumberRemoteCacher<T>(serializerEnum, server);
                 }
                 return Instance;

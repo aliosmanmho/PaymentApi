@@ -16,7 +16,7 @@ namespace Payment.Providers.Cache.Remote
         protected MemorySerializer _serializerEnum { get; private set; }
         protected RemoteCacher()
         {
-            _cache = new RedisServer();
+            _cache = new RedisServer("");
 
             _serializerEnum = MemorySerializer.Json;
         }
@@ -58,11 +58,10 @@ namespace Payment.Providers.Cache.Remote
 
         public int GetCount()
         {
-            throw new NotImplementedException();
-            //lock (_lock)
-            //{
-            //    return _cache.Count();
-            //}
+            lock (_lock)
+            {
+                return _cache.Count();
+            }
         }
 
         public T GetOrAdd(string key, Func<T> factory)

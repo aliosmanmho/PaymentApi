@@ -13,6 +13,7 @@ namespace Payment.Providers.Cache.Remote
         string Get(string key);
         bool Remove(string key);
         void Clear();
+        int Count();
 
     }
 }

@@ -13,11 +13,11 @@ namespace Payment.Providers.Cache
 {
     public class CacherConfiguration
     {
-        public static void Initilize(string serilizer)
+        public static void Initilize(string serilizer,string redisConfig)
         {
             BinNumberCacher<BinNumberCacherModel>.Initilize(serializerEnum: (MemorySerializer)Enum.Parse(typeof(MemorySerializer), serilizer));
             CountryCacher<CountryCacherModel>.Initilize(serializerEnum: (MemorySerializer)Enum.Parse(typeof(MemorySerializer), serilizer));
-            //BinNumberRemoteCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true); //TODO:Remote Cacher Fix
+            BinNumberRemoteCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true,redisConfig);
         }
     }
 }

@@ -34,25 +34,16 @@ namespace Payment.Bussinies.Repositories
             {
                 _logger?.Log(LogLevel.Information, $"{nameof(GetByBinNoAsycn)} Start", binNummberRequest);
 
-               
-                
-               
-
-                if (BinNumberCacher<BinNumberCacherModel>.Get().GetCount() <= 0)
+                if (BinNumberRemoteCacher<BinNumberCacherModel>.Get().GetCount() <= 0)
                 {
                     var binMubers = await _paymentBinNumberRepository.GetAllAsync();
                     var taskList = binMubers.Select(x =>
                     {
-                        return BinNumberCacher<BinNumberCacherModel>.Get().AddAsync(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(x));
+                        return BinNumberRemoteCacher<BinNumberCacherModel>.Get().AddAsync(x.BinCode.ToString(), BinNumberCacherModel.ToCacheModel(x));
                     });
                     await Task.WhenAll(taskList);
                 }
-                var binNumber = BinNumberCacher<BinNumberCacherModel>.Get().GetOrNull(binNummberRequest.BinNummber.ToString());
-                
-                //TODO:Remote Cacher Fix
-                //await BinNumberRemoteCacher<BinNumberCacherModel>.Get().AddAsync(binNumber.BinCode.ToString(), binNumber);
-                //var data = await BinNumberRemoteCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
-             
+                var binNumber = BinNumberRemoteCacher<BinNumberCacherModel>.Get().GetOrNull(binNummberRequest.BinNummber.ToString());
 
                 if (binNumber == null)
                     throw new Exception($"Not Found Bin Number! Number:{binNummberRequest.BinNummber}");

@@ -26,7 +26,6 @@ namespace Payment.Providers.Cache.Test
                 var data = await BinNumberCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
                 Assert.NotNull(data);
                 Assert.Equal(binNumber.BinCode, data?.BinCode);
-
             }
             finally
             {
