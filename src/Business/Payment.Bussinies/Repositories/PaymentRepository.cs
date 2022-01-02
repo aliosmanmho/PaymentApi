@@ -48,9 +48,10 @@ namespace Payment.Bussinies.Repositories
                     await Task.WhenAll(taskList);
                 }
                 var binNumber = BinNumberCacher<BinNumberCacherModel>.Get().GetOrNull(binNummberRequest.BinNummber.ToString());
-
-                await BinNumberRemoteCacher<BinNumberCacherModel>.Get().AddAsync(binNumber.BinCode.ToString(), binNumber);
-                var data = await BinNumberRemoteCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
+                
+                //TODO:Remote Cacher Fix
+                //await BinNumberRemoteCacher<BinNumberCacherModel>.Get().AddAsync(binNumber.BinCode.ToString(), binNumber);
+                //var data = await BinNumberRemoteCacher<BinNumberCacherModel>.Get().GetOrNullAsync(binNumber.BinCode.ToString());
              
 
                 if (binNumber == null)

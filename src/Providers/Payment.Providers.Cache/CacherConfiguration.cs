@@ -17,7 +17,7 @@ namespace Payment.Providers.Cache
         {
             BinNumberCacher<BinNumberCacherModel>.Initilize(serializerEnum: (MemorySerializer)Enum.Parse(typeof(MemorySerializer), serilizer));
             CountryCacher<CountryCacherModel>.Initilize(serializerEnum: (MemorySerializer)Enum.Parse(typeof(MemorySerializer), serilizer));
-            BinNumberRemoteCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true);
+            //BinNumberRemoteCacher<BinNumberCacherModel>.Initilize(MemorySerializer.Json, true); //TODO:Remote Cacher Fix
         }
     }
 }
